@@ -67,10 +67,8 @@ pred ssEnumeration {
 }
 
 // Definition 3.2 in Principles of Eventual Consistency
-pred wellFormed {
+fact wellFormed {
 	rbNoNabla
 	intervalOrder
 	ssEnumeration
 }
-
-run {wellFormed} for 3 but 3 E

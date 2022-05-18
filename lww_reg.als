@@ -1,5 +1,5 @@
 module lww_reg
-open base
+open consistency
 
 // Values that can be written
 sig WriteValue extends Value {}
@@ -16,6 +16,11 @@ sig Read extends Operation {}
 // Write op
 sig Write extends Operation {
 	v: WriteValue
+}
+
+// utility function for showing write values as attributes of an event
+fun arg[]: E->(WriteValue + Undefined) {
+    {e : E, val:(WriteValue+Undefined) | val=(e in op.Write => e.op.v else Undefined)}
 }
 
 // every write value is connected to one write
@@ -46,4 +51,17 @@ fact UpdateReadRVal {
 		some (op.Write & vis.r) => r.rval = maximalWrite[r].op.v else r.rval = Undefined
 }
 
-run {} for 4
+check {noCircularCausality}
+
+check {basicEventualConsistency => readMyWrites}
+check {basicEventualConsistency => monotonicReads}
+check {basicEventualConsistency => consistentPrefix}
+
+check {basicEventualConsistency => causalVisibility}
+check {basicEventualConsistency => causalArbitration}
+
+check {causalConsistency => singleOrder}
+check {causalConsistency => realtime}
+check {causalConsistency => consistentPrefix}
+
+check {sequentialConsistency => realtime}

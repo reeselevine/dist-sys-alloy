@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view>
+
+<defaultnode/>
+
+<defaultedge/>
+
+<node>
+   <type name="Int"/>
+   <type name="Ok"/>
+   <type name="Read"/>
+   <type name="String"/>
+   <type name="Undefined"/>
+   <type name="univ"/>
+   <type name="Write"/>
+   <type name="WriteValue"/>
+   <type name="seq/Int"/>
+   <type name="consistency/base/E"/>
+</node>
+
+<node showlabel="no">
+   <set name="$acyclic_x" type="univ"/>
+</node>
+
+<node visible="no">
+   <type name="consistency/base/Nabla"/>
+   <type name="consistency/base/Operation"/>
+   <type name="consistency/base/Value"/>
+</node>
+
+<edge visible="no" attribute="yes">
+   <relation name="$arg"> <type name="consistency/base/E"/> <type name="Undefined"/> </relation>
+   <relation name="$arg"> <type name="consistency/base/E"/> <type name="WriteValue"/> </relation>
+   <relation name="op"> <type name="consistency/base/E"/> <type name="consistency/base/Operation"/> </relation>
+   <relation name="rval"> <type name="consistency/base/E"/> <type name="consistency/base/Nabla"/> </relation>
+   <relation name="rval"> <type name="consistency/base/E"/> <type name="consistency/base/Value"/> </relation>
+   <relation name="ss"> <type name="consistency/base/E"/> <type name="consistency/base/E"/> </relation>
+   <relation name="v"> <type name="Write"/> <type name="WriteValue"/> </relation>
+</edge>
+
+</view>
+
+</alloy>
