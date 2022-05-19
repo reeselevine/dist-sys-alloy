@@ -23,7 +23,7 @@ fun arg[]: E-> WriteValue {
 }
 
 // utility function for showing the set of values a read returns
-fun readValues : set (E-> WriteValue) {
+fun readValues : E-> WriteValue {
     {e : E, val: WriteValue | e in op.Read and val in e.rval.values }
 }
 
