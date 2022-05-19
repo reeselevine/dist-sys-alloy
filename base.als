@@ -27,13 +27,15 @@ fact OpSomeE {
 
 // rb is a partial order
 fact rbPartialOrder {
-	acyclic[rb, E]
+	irreflexive[rb]
 	transitive[rb]
 }
 
 // ss is an equivalence
 fact ssEquiv {
-	equivalence[ss, E]
+	reflexive[ss, E]
+	transitive[ss]
+	symmetric[ss]
 }
 
 // vis is acyclic
@@ -61,9 +63,7 @@ pred intervalOrder {
 
 // events in the same session have a natural (i.e. not an infinite prefix) total order
 pred ssEnumeration {
-	acyclic[ss & rb, E] and
-	transitive[ss & rb] and
-	complete[ss & rb, E]
+	all x, y : E | (x -> y) in ss and x != y => (x->y) in (rb + ~rb)
 }
 
 // Definition 3.2 in Principles of Eventual Consistency
