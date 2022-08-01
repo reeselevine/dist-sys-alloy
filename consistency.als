@@ -28,7 +28,7 @@ pred monotonicReads {
 // If an event from another session is visible, so are all events that precede
 // that event in arbitration order.
 pred consistentPrefix {
-	ar.(vis & ~ss) in vis
+	ar.(vis-ss) in vis
 }
 
 // The following four predicates guarantee varying levels of causality
@@ -100,4 +100,62 @@ pred linearizability {
 	singleOrderSimpl
 	realtime
 }
-	
+
+// We can also define a variety of consistency checks, which examine whether
+// a certain predicate is possible under a given consistency level. Again, these
+// checks are of limited usefulness without a definition of a replicated data type.
+// These checks can be used as a set of litmus tests for stronger consistency levels;
+// if the test fails, the implementation of the stronger consistency model is broken.
+// Also note that any test that is allowed under one consistency model is allowed
+// under any weaker consistency model, although it may be useful to examine
+// whether a simpler test is possible under weaker models.
+
+
+// Under quiescent consistency, a number of undesirable behaviors are allowed,
+// but one of the more undesirable ones (for stronger levels) is circular causality.
+assert QCCircularCausality {
+	noCircularCausality
+}
+
+// Under basic eventual consistency, a variety of interesting behaviors are possible.
+
+assert BECReadMyWrites {
+	basicEventualConsistency => readMyWrites
+}
+
+assert BECMonotonicReads {
+	basicEventualConsistency => monotonicReads
+}
+
+assert BECConsistentPrefix {
+	basicEventualConsistency => consistentPrefix
+}
+
+assert BECCausalVisibility {
+	basicEventualConsistency => causalVisibility
+}
+
+assert BECCausalArbitration {
+	basicEventualConsistency => causalArbitration
+}
+
+// Under causal consistency, the following behaviors are allowed.
+
+assert CCSingleOrder {
+	causalConsistency => singleOrderSimpl
+}
+
+assert CCRealtime {
+	causalConsistency => realtime
+}
+
+assert CCConsistentPrefix {
+	causalConsistency => consistentPrefix
+}
+
+// under sequential consistency, ordering may not correspond to the
+// wall-clock time of operations.
+
+assert SCRealtime {
+	sequentialConsistency => realtime
+}

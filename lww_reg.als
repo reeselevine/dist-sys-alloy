@@ -9,7 +9,6 @@ fun maximalWrite[e: E]: lone E {
 }
 
 // a read must return the last visible write, or undefined if there is no visible write
-// every read must return a written value or undefined
 fact ReadRVal {
 	all r : op.Read |
 		some (op.Write & vis.r) => r.rval = maximalWrite[r].op.v else r.rval = Undefined
@@ -20,17 +19,4 @@ fun arg[]: E-> set (WriteValue + Undefined) {
     {e : E, val: (WriteValue+Undefined) | val=(e in op.Write => e.op.v else none)}
 }
 
-check {noCircularCausality}
-
-check {basicEventualConsistency => readMyWrites}
-check {basicEventualConsistency => monotonicReads}
-check {basicEventualConsistency => consistentPrefix}
-
-check {basicEventualConsistency => causalVisibility}
-check {basicEventualConsistency => causalArbitration}
-
-check {causalConsistency => singleOrder}
-check {causalConsistency => realtime}
-check {causalConsistency => consistentPrefix}
-
-check {sequentialConsistency => realtime}
+check BECReadMyWrites for 3 but exactly 1 Read, 1 Write

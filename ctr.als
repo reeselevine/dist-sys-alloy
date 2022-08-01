@@ -1,6 +1,5 @@
 module ctr
 open consistency
-open util/integer
 
 sig CtrReadValue extends Value {
   value: Int
@@ -40,6 +39,7 @@ pred noIncRead {
 		r.rval.value > 0
 }
 
+check BECReadMyWrites for 3 but exactly 1 Read, 1 Inc
 check {causalConsistency => noIncRead} for 5
 
 

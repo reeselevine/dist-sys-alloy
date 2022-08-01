@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view>
+
+<defaultnode/>
+
+<defaultedge/>
+
+<node>
+   <type name="String"/>
+   <type name="univ"/>
+   <type name="seq/Int"/>
+   <type name="set_base/Add"/>
+   <type name="set_base/Ok"/>
+   <type name="set_base/Read"/>
+   <type name="set_base/Remove"/>
+   <type name="set_base/SetElem"/>
+   <type name="set_base/SetReadValue"/>
+   <type name="set_base/consistency/base/E"/>
+</node>
+
+<node showlabel="no">
+   <set name="$concurAddRem_a" type="set_base/consistency/base/E"/>
+   <set name="$concurAddRem_r" type="set_base/consistency/base/E"/>
+   <set name="$concurAddRem_rem" type="set_base/consistency/base/E"/>
+</node>
+
+<node visible="no">
+   <type name="Int"/>
+   <type name="set_base/consistency/base/Nabla"/>
+   <type name="set_base/consistency/base/Operation"/>
+   <type name="set_base/consistency/base/Value"/>
+</node>
+
+<edge visible="no" attribute="yes">
+   <relation name="$arg"> <type name="set_base/consistency/base/E"/> <type name="set_base/SetElem"/> </relation>
+   <relation name="$readValues"> <type name="set_base/consistency/base/E"/> <type name="set_base/SetElem"/> </relation>
+   <relation name="op"> <type name="set_base/consistency/base/E"/> <type name="set_base/consistency/base/Operation"/> </relation>
+   <relation name="rval"> <type name="set_base/consistency/base/E"/> <type name="set_base/consistency/base/Nabla"/> </relation>
+   <relation name="rval"> <type name="set_base/consistency/base/E"/> <type name="set_base/consistency/base/Value"/> </relation>
+   <relation name="ss"> <type name="set_base/consistency/base/E"/> <type name="set_base/consistency/base/E"/> </relation>
+</edge>
+
+</view>
+
+</alloy>
